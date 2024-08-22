@@ -10,6 +10,7 @@ export interface Product {
   description?: string;
   manufacturer?: string;
   price?: number;
+  priceFormatted?: string;
   categories?: Category[];
 }
 

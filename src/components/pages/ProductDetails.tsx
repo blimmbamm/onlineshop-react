@@ -49,7 +49,7 @@ export default function ProductDetailsPage() {
             {product?.description}
           </Typography>
           <Typography mt="auto" ml="auto" fontSize={30}>
-            {product?.price}
+            {product?.priceFormatted}
           </Typography>
         </Box>
       </Box>

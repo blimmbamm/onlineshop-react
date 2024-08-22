@@ -12,7 +12,7 @@ export function useCategoryProductsQuery(categoryId: string | null) {
     queryFn: () =>
       query<"products">({
         operation: "products",
-        fields: ["id", "name", "description", "manufacturer", "price"],
+        fields: ["id", "name", "description", "manufacturer", "priceFormatted"],
         variables: { filter: { type: "String", value: filter } },
       }),
   });
@@ -30,7 +30,7 @@ export function useProductDetailsQuery(productId: string) {
           "name",
           "description",
           "manufacturer",
-          "price",
+          "priceFormatted",
           {
             categories: [
               "id",
@@ -41,7 +41,7 @@ export function useProductDetailsQuery(productId: string) {
                   "name",
                   "description",
                   "manufacturer",
-                  "price",
+                  "priceFormatted",
                 ],
               },
             ],
@@ -60,8 +60,7 @@ export function useRecentlyViewedProducts() {
     queryFn: () =>
       query<"products">({
         operation: "products",
-        fields: ["id", "name", "manufacturer", "price"],
-        // variables: { categoryId: { type: "ID", value: categoryId } },
+        fields: ["id", "name", "manufacturer", "priceFormatted"],
         variables: {
           options: {
             type: "String",

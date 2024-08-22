@@ -59,7 +59,7 @@ export default function ProductCard(props: ProductCardProps) {
           {props.description && <Typography>{product.description}</Typography>}
         </Box>
         <Typography sx={{ display: "flex", justifyContent: "flex-end" }}>
-          {product.price}
+          {product.priceFormatted}
         </Typography>
       </Box>
     </Card>
