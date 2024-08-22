@@ -24,6 +24,7 @@ export default function CategoriesNavMenu(props: {
         open={Boolean(props.anchorEl)}
         anchorEl={props.anchorEl}
         onClose={props.onClose}
+        disableScrollLock
       >
         <MenuItem onClick={toggleEditDialog}>Edit</MenuItem>
         <MenuItem onClick={toggleAddDialog}>Add sub category</MenuItem>
