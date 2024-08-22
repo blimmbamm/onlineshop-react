@@ -18,7 +18,10 @@ export default function NavigationDrawer(props: {
   open: boolean;
   onClose: () => void;
 }) {
-  const navItems: NavItem[] = [{ title: "Home", link: "/" }, ...NAV_ITEMS];
+  const navItems: NavItem[] = [
+    { title: "Home", link: "/", closeDrawerOnNavigate: true },
+    ...NAV_ITEMS,
+  ];
 
   const drawerWidth = 200;
 
@@ -26,10 +29,19 @@ export default function NavigationDrawer(props: {
     backToTopLevelEnabled,
     handleBackToTopLevel,
     handleBackToTopLevelEnabled,
-    createToBeRenamedHandler,
+    setOnHomeNavigation,
     showCategoriesNavigation,
     showHomeNavigation,
   } = useNavigationDrawer();
+
+  function createTopLevelNavigationHandler(navItem: NavItem) {
+    return () => {
+      setOnHomeNavigation(navItem.link !== "/products");
+      if (navItem.closeDrawerOnNavigate) {
+        props.onClose();
+      }
+    };
+  }
 
   const backToTopButton = backToTopLevelEnabled && (
     <ListItem disablePadding divider>
@@ -43,18 +55,19 @@ export default function NavigationDrawer(props: {
     <CategoriesNav
       onViewTopLevelCategories={handleBackToTopLevelEnabled}
       topListItem={backToTopButton}
+      onClose={props.onClose}
     />
   );
 
   const homeNavigation = (
     <List>
       {navItems.map((navItem) => (
-        <ListItem
-          disablePadding
-          key={navItem.title}
-          onClick={createToBeRenamedHandler(navItem)}
-        >
-          <ListItemButton component={RouterLink} to={navItem.link}>
+        <ListItem disablePadding key={navItem.title}>
+          <ListItemButton
+            onClick={createTopLevelNavigationHandler(navItem)}
+            component={RouterLink}
+            to={navItem.link}
+          >
             <ListItemText primary={navItem.title} />
           </ListItemButton>
         </ListItem>
@@ -100,18 +113,12 @@ function useNavigationDrawer() {
     setOnHomeNavigation(true);
   }
 
-  function createToBeRenamedHandler(navItem: NavItem) {
-    return () => {
-      setOnHomeNavigation(navItem.link !== "/products");
-    };
-  }
-
   return {
     showCategoriesNavigation,
     showHomeNavigation,
     backToTopLevelEnabled,
     handleBackToTopLevel,
     handleBackToTopLevelEnabled,
-    createToBeRenamedHandler,
+    setOnHomeNavigation,
   };
 }

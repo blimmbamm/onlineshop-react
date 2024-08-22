@@ -1,6 +1,7 @@
 export interface NavItem {
   title: string;
   link: string;
+  closeDrawerOnNavigate: boolean;
 }
 
 export interface Product {

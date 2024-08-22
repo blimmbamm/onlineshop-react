@@ -21,11 +21,13 @@ import LoadingSpinner from "../../ui/LoadingSpinner";
 export default function CategoriesNav(props: {
   onViewTopLevelCategories?: (value: boolean) => void;
   topListItem?: React.ReactNode;
+  onClose?: () => void;
 }) {
   const {
     data,
     isPending,
     createNavigateCategoriesHandler,
+    handleNavigateCategories,
     createViewSubcategoriesHandler,
     handleNavigateBack,
   } = useCategoryNavigation({
@@ -67,7 +69,11 @@ export default function CategoriesNav(props: {
           category={item}
           key={item.id}
           onViewSubcategories={createViewSubcategoriesHandler(item)}
-          onClick={createNavigateCategoriesHandler(item)}
+          // onClick={createNavigateCategoriesHandler(item)}
+          onClick={() => {
+            handleNavigateCategories(item);
+            props.onClose?.();
+          }}
           divider={index === subCategories.length - 1}
           onEditCategory={createEditCategoryHandler(item)}
           onAddSubcategory={createAddCategoryHandler(item)}
@@ -102,6 +108,12 @@ function useCategoryNavigation({
     };
   }
 
+  function handleNavigateCategories(category: Category) {
+    navigation(`/products?category=${category.id}`);
+    // setSearchParams({ category: category.id });
+    setCategoryId(category.id!);
+  }
+
   function createNavigateCategoriesHandler(category: Category) {
     return () => {
       navigation(`/products?category=${category.id}`);
@@ -129,6 +141,7 @@ function useCategoryNavigation({
     data,
     isPending,
     createNavigateCategoriesHandler,
+    handleNavigateCategories,
     createViewSubcategoriesHandler,
     handleNavigateBack,
   };
