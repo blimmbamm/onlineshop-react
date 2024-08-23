@@ -232,7 +232,8 @@ function useAddProduct(args: {
 
   function resetCategories() {
     setIsInitial(true);
-    setCategorySelection([]);
+    // setCategorySelection([]);
+    setCategorySelection(prevSelection => prevSelection.filter(item => item.fixed))
   }
 
   function reset() {

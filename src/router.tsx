@@ -20,7 +20,7 @@ export const router = createBrowserRouter([
       {
         path: "products",
         element: <ProductsLayout />,
-        errorElement: <div>blabla product not found</div>,
+        // errorElement: <div>blabla product not found</div>,
         children: [
           {
             index: true,

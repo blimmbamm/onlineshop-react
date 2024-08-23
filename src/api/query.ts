@@ -17,18 +17,15 @@ export async function query<T extends Operation>(args: {
     const { data, errors } = await response.json();
 
     if (errors) {
-      console.log(errors);
-      
-      // If gql returns errors, throw error
-      throw new Error();
+      throw new Error(errors[0].message)
     }
 
     return data[args.operation];
   } catch (error) {
     // Either fetch failed or gql returned errors
-    if (error instanceof Error) {
-      error.message = "Something went wrong";
-    }
+    // if (error instanceof Error) {
+    //   error.message = "Something went wrong";
+    // }
 
     throw error;
   }
