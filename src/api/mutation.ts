@@ -1,5 +1,10 @@
 import { mutation as gqlMutation } from "gql-query-builder";
-import { Fields, MutationOperation, TypeFromKey, TypeFromOperation } from "./types";
+import {
+  Fields,
+  MutationOperation,
+  TypeFromKey,
+  TypeFromOperation,
+} from "./types";
 import IQueryBuilderOptions from "gql-query-builder/build/IQueryBuilderOptions";
 
 export async function mutation<T extends MutationOperation>(args: {
@@ -15,20 +20,12 @@ export async function mutation<T extends MutationOperation>(args: {
     });
 
     const { data, errors } = await response.json();
-    console.log(data);
-    console.log(errors);
-    
-    
 
     if (errors) {
-      console.log(errors);
-
-      // If gql returns errors, throw error
-      // throw new Error();
-      throw errors[0]
+      // If gql returns errors, throw first of these errors
+      throw errors[0];
     }
-    console.log('executed?');
-    
+
     return data[args.operation];
   } catch (error) {
     // Either fetch failed or gql returned errors
